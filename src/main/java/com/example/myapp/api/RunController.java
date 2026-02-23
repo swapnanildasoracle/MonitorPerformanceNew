@@ -18,17 +18,17 @@ public class RunController {
     // Option A: POST with JSON body
     @PostMapping("/run")
     public RunResponse run(@Valid @RequestBody RunRequest request) {
-        String result = legacyAppService.run(request.input1(),request.input2());
+        String result = legacyAppService.run(request.url(),request.token());
         return new RunResponse(result);
     }
 
     // Option B: GET with query param (useful for quick tests)
     @GetMapping("/run")
-    public RunResponse runGet(@RequestParam @NotBlank String input1,@RequestParam @NotBlank String input2) {
-        String result = legacyAppService.run(input1,input2);
+    public RunResponse runGet(@RequestParam @NotBlank String url,@RequestParam @NotBlank String token) {
+        String result = legacyAppService.run(url,token);
         return new RunResponse(result);
     }
 
-    public record RunRequest(@NotBlank String input1,@NotBlank String input2) {}
+    public record RunRequest(@NotBlank String url,@NotBlank String token) {}
     public record RunResponse(String result) {}
 }
